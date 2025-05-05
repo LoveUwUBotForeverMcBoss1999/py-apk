@@ -10,22 +10,21 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Date
         id: get-date
-        run: |
-          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
         shell: bash
+        run: echo "::set-output name=date::$(/bin/date -u '+%Y%m%d')"
 
       - name: Cache Buildozer global directory
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .buildozer_global
           key: buildozer-global-${{ hashFiles('buildozer.spec') }}
 
       - name: Cache .buildozer directory
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .buildozer
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
